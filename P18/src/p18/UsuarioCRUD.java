@@ -38,6 +38,18 @@ public class UsuarioCRUD {
         }
     }
 
+    public ResultSet buscarPorCorreo(String correo) {
+        String sqlBuscar = "SELECT * FROM usuarios WHERE Correo = ?";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sqlBuscar);
+            ps.setString(1, correo);
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("Error al buscar por correo: " + e.getMessage());
+            return null;
+        }
+    }
+
     public boolean actualizarUsuario(int id, String nombre, String correo, String contrasena) {
         String sqlActualizar = "UPDATE usuarios SET Nombre = ?, Correo = ?, Contrasena = ? WHERE id = ?";
         try {
@@ -49,6 +61,18 @@ public class UsuarioCRUD {
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error al actualizar el usuario: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminarUsuario(int id) {
+        String sqlEliminar = "DELETE FROM usuarios WHERE id = ?";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sqlEliminar);
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar el usuario: " + e.getMessage());
             return false;
         }
     }
