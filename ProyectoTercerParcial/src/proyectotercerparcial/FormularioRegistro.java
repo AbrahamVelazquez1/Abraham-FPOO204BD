@@ -62,6 +62,8 @@ public class FormularioRegistro extends JFrame {
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
+        
+        //respetar las dimensiones de los botones para mantener una armonia en la UI :)
 
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.CENTER)

@@ -109,15 +109,23 @@ public class InicioSesion extends JFrame {
         ResultSet rs = crud.buscarPorDepartamento(departamento);
 
         try {
-            if (rs != null && rs.next()) {
+            boolean usuarioEncontrado = false;
+            int idUsuario = -1;
+
+            while (rs != null && rs.next()) {
                 if (rs.getString("contrasena").equals(contrasena)) {
-                    JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso", "Exito", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Contrasena incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                    usuarioEncontrado = true;
+                    idUsuario = rs.getInt("id_usuario");
+                    break;
                 }
+            }
+
+            if (usuarioEncontrado) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                new Menu(idUsuario).setVisible(true);
+                dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Contrasena incorrecta o usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error al iniciar sesion: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
